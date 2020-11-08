@@ -1,0 +1,59 @@
+Find pi on network: arp -a
+Default password for pi user: raspberry
+
+Enabling ssh: https://www.raspberrypi.org/documentation/remote-access/ssh/
+
+Reboot: sudo shutdown -r now
+Note: If wifi is setup, it takes precedence over ethernet.
+
+Node installation: 
+  sudo apt-get install -y nodejs
+  node -v (v10.21.0)
+  
+Postgress installation:
+  https://opensource.com/article/17/10/set-postgres-database-your-raspberry-pi
+  
+  sudo apt install postgresql libpq-dev postgresql-client
+  
+  Start db server: pg_ctlcluster 11 main start
+  Server location: /var/lib/postgresql/11/main
+  Data dir:        /var/lib/postgresql/11/main
+  Log dir:         /var/log/postgresql/postgresql-11-main.log
+  
+  Add postgres to sudoers:
+    sudo nano /etc/sudoers
+    Add below line starting with root: postgres ALL=(ALL:ALL) ALL
+    
+  sudo service postgresql status
+  sudo service postgresql restart
+  
+  For all below commands:
+    sudo su postgres
+  
+  Add user: 
+    on psql console
+    create user test with encrypted password 'test';
+    grant all privileges on database test to test;
+    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO test; ( can be done when u have connected to database (\c test))
+    GRANT ALL PRIVILEGES ON SCHEMA public TO test;
+  
+  List databases: \l
+  Quit psql: \q
+  Connect to database: \c test;
+  
+  
+  Configure a user to connec to postgress remotely:
+  https://support.plesk.com/hc/en-us/articles/115003321434-How-to-enable-remote-access-to-PostgreSQL-server-on-a-Plesk-server-
+   Find location of pg_hba.conf, run from psql client.
+   SHOW hba_file;
+   /etc/postgresql/11/main/pg_hba.conf
+   
+  
+NPM install:
+  https://www.instructables.com/Install-Nodejs-and-Npm-on-Raspberry-Pi/
+  
+Start application:
+  cd /home/pi/Documents/fivewords/5wordsdaily.live
+  npm run start
+  http://192.168.1.175:8081/
+  
